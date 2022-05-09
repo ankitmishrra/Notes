@@ -1,0 +1,42 @@
+Hamiltonian Path in an undirected graph is a path that visits each vertex exactly once. 
+A Hamiltonian cycle (or Hamiltonian circuit) is a Hamiltonian Path such that there is an edge (in the graph) from the last vertex to the first vertex of the Hamiltonian Path. 
+
+
+Q Determine whether a given graph contains Hamiltonian Cycle or not. If it contains, then prints the path. 
+Following are the input and output of the required function.
+
+Q What is Hamiltonian Cycle:
+1. Hamiltonian Path: is a path in a graph that covers all the node.
+2. if the last node and the src of the graph are connected, then it is known as
+    Hamiltonian Cycle
+3. We use backtracking to find them. 
+
+4. Add the visited Visit all the neighbouring vertex, 
+
+main(){
+    ArrayList<Edge>[] graph; 
+
+    HashSet<Integer> set = new HashSet<>();
+    findHamiltonian(graph, src, visited, orgsrc, psf);
+
+}
+
+void findHamiltonian(graph, src, visited, orgsrc, psf){
+
+    if(visited.size()==graph.length-1){
+        if(graph){
+
+        }
+    }
+    visited.add(src);
+
+    for(Edge e: graphp[src]){
+
+        if(visited.contains(e.nbr)==false){
+
+            findHamiltonian(graph, e.nbr, visited, orgsrc, psf);
+
+        }
+    }
+}
+
