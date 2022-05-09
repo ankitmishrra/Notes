@@ -1,0 +1,88 @@
+It is like level order traversal in the trees
+the traversal happens radially, it means vertices with distance 1 will be traversed first
+next the vertices with distance 2 ans so on
+
+Use a queue
+    - add src node in the queue
+    - iterate till the q is not empty
+    - note the size of the queue
+    - iterate till the size is not 0
+    - poll the current node in q, push all the unvisited nodes to the Q
+    
+    import java.io.*;
+import java.util.*;
+
+public class Main {
+  static class Edge {
+    int src;
+    int nbr;
+
+    Edge(int src, int nbr) {
+      this.src = src;
+      this.nbr = nbr;
+    }
+  }
+
+  static class Pair {
+    int v;
+    String path;
+
+    Pair(int v, String path) {
+      this.v = v;
+      this.path = path;
+    }
+  }
+  public static void main(String[] args) throws Exception {
+    BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+
+    int vtces = Integer.parseInt(br.readLine());
+    ArrayList<Edge>[] graph = new ArrayList[vtces];
+    for (int i = 0; i < vtces; i++) {
+      graph[i] = new ArrayList<>();
+    }
+
+    int edges = Integer.parseInt(br.readLine());
+    for (int i = 0; i < edges; i++) {
+      String[] parts = br.readLine().split(" ");
+      int v1 = Integer.parseInt(parts[0]);
+      int v2 = Integer.parseInt(parts[1]);
+      graph[v1].add(new Edge(v1, v2));
+      graph[v2].add(new Edge(v2, v1));
+    }
+
+    int src = Integer.parseInt(br.readLine());
+
+    // write your code here
+    boolean [] visited = new boolean[graph.length];
+    Pair p = new Pair(src, "" + src);
+    bfs(graph, p, visited);
+  }
+
+  public static void bfs( ArrayList<Edge>[] graph, Pair src, boolean [] visited) {
+
+    Queue<Pair> q = new LinkedList<>();
+
+    q.add(src);
+
+    while (!q.isEmpty()) {
+      int size = q.size();
+      while (size-- > 0) {
+   
+        Pair p = q.remove();
+         if(visited[p.v]==true) continue;
+        System.out.print(p.v + "@" + p.path);
+        System.out.println("");
+          visited[p.v] = true;
+          for (Edge e : graph[p.v]) {
+              
+                  Pair temp = new Pair(e.nbr, p.path +e.nbr);
+                  q.add(temp);  
+              
+          
+          }
+        
+
+      }
+    }
+  }
+}
