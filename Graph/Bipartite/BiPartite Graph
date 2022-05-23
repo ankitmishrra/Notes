@@ -1,0 +1,105 @@
+A graph is bipartite if its possible to divide the vertices into two mutually exclusive and exhaustive sets, such that
+all the edges are across the two sets
+
+    1. mutually exclusive : all the vertices of set 1 are different than all the vertices of set2
+        - the intersection of both the sets is 0
+    2. exhaustive all the vertices are covered
+
+# Every Non  Cyclic graph is bipartite
+#if any graph consists of odd cycle then it can never be bipartite
+Refer: Bipartite.png
+This graph is Bipartite
+
+using dfs traverse every level and add if its part of odd set or even set, alternatively
+if at on
+
+class Solution {
+    public boolean isBipartite(int[][] g) {
+     
+        int n = g.length;
+        ArrayList<Edge>[] graph = new ArrayList[n];
+        
+        for (int i = 0; i < n; i++) {
+            graph[i] = new ArrayList<>();
+      }
+        
+        
+        for (int i = 0; i < g.length; i++) {
+         for(int j = 0; j<g[i].length; j++){
+             
+             
+                graph[i].add(new Edge(i, g[i][j]));
+                graph[g[i][j]].add(new Edge(g[i][j], i));
+         }
+         
+        
+         
+      }
+        
+        int [] visited = new int[n];
+      
+      boolean isBipartite = true;
+
+      //graph can be disconnected, so loop over all the nodes
+      for(int i=0; i<graph.length; i++){
+          if(visited[i]==0){
+            isBipartite = isBipartite && isBipartite(graph, i, visited);
+          }
+          
+      }
+        return isBipartite;
+    }
+    
+    public boolean isBipartite(ArrayList<Edge>[] graph, int src, int [] visited){
+        e
+       Queue<Integer> q = new LinkedList<>();
+       Set<Integer> even = new HashSet<>();
+       Set<Integer> odd = new HashSet<>();
+       
+       q.add(src);
+       visited[src]=1;
+       
+       boolean isEven=true;
+       odd.add(src);
+       while(!q.isEmpty()){
+           int size = q.size();
+           while(size-->0){
+               Integer v = q.poll();
+               visited[v]=1;
+               if(isEven){
+                  for(Edge edge : graph[v]){
+                      if(visited[edge.nbr]==0){
+                        q.add(edge.nbr);
+                        if(odd.contains(edge.nbr))return false;
+                        even.add(edge.nbr);     
+                      }
+                     
+                  } 
+               }else{
+                   for(Edge edge : graph[v]){
+                       if(visited[edge.nbr]==0){
+                            q.add(edge.nbr);
+                            if(even.contains(edge.nbr))return false;
+                            odd.add(edge.nbr);   
+                       }
+                     
+                  }
+               }
+               
+           }
+           isEven = !isEven;
+       }
+       
+       return true;
+   }
+}
+
+class Edge {
+      int src;
+      int nbr;
+
+      Edge(int src, int nbr) {
+         this.src = src;
+         this.nbr = nbr;
+      }
+   }

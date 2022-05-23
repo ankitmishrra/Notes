@@ -1,0 +1,32 @@
+LC Redundant connections
+Accounts Merge
+
+whenever we have a problem where we need to find all the connected components or cycle we can use union find.
+there are two major functions\
+create new parent array and initialize every vertex as parent of itself - Discussed below
+
+find(int v)
+    We have to group all the connected components together
+    in other words parent of all the vertices that are connected would be the same. We call it parent here, but
+    it actually is stamping connected components with same id. 
+
+    if parent[v]!=v
+      return  find(parent[v])
+
+
+union(int u, int v)
+    x =  find(u)
+    y = find(v)
+
+    if(x!=y)
+    parent[u] = Y
+here we always change the parent of left vertex to the right, doing this we are increasing the hops to find 
+the parent .
+    \
+     \
+      \
+       \
+this is going to be the kind of structure of the recursive tree call that is going to be made.
+
+we can balance it out based on the size or rank of the parent
+
