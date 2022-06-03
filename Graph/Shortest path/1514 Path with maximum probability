@@ -1,0 +1,60 @@
+class Solution {
+    public double maxProbability(int n, int[][] edges, double[] succProb, int start, int end) {
+        
+        Map<Integer, List<Pair>> adj = new HashMap<>();
+        int i=0;
+        for(int [] edge :edges){
+            int u= edge[0];
+            int v = edge[1];
+            
+            
+            adj.putIfAbsent(u,new ArrayList());
+            adj.putIfAbsent(v,new ArrayList());
+            
+            Pair p1 = new Pair(v, succProb[i]);
+            Pair p2 = new Pair(u,succProb[i++]);
+            
+            adj.get(u).add(p1);
+            adj.get(v).add(p2);
+        }
+        
+        Queue<Pair> q = new PriorityQueue<>((p1,p2)->{return (p2.wt-p1.wt)<0?-1:1; });
+        
+    int[] visited = new int[n];
+    
+    q.add(new Pair(start,1));
+    while(q.size()>0){
+        
+        Pair temp = q.poll();
+       // System.out.println(temp.v);
+       // if(visited[temp.v]==1)continue;
+        if(adj.get(temp.v)==null)continue;
+        double p = temp.wt;
+        if(temp.v==end) return p;
+        visited[temp.v]=1;
+        
+        for(Pair num : adj.get(temp.v)){
+            if(visited[num.v]==0){
+                num.wt*=p;
+                q.add(num);
+                
+            }
+        }
+        
+    }
+        return 0;
+       
+    }
+    
+    
+}
+class Pair{
+    
+    int v;
+    double wt;
+    
+    Pair(int v, double wt){
+        this.v = v;
+        this.wt = wt;
+    }
+}

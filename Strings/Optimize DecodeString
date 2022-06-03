@@ -1,0 +1,46 @@
+class Solution {
+    public String decodeString(String s) {
+        
+        char [] arr = s.toCharArray();
+        
+        Stack<String> stack = new Stack<>();
+        StringBuilder sb = new StringBuilder();
+         
+        
+        for(int i=0; i<arr.length; i++){
+            
+            if(arr[i]==']'){
+                StringBuilder sb2 = new StringBuilder();
+                while(!stack.isEmpty() && !stack.peek().equals("[")){
+                    sb2.insert(0,stack.pop());
+                }
+                stack.pop();
+                
+                StringBuilder num=new StringBuilder();
+                while(!stack.isEmpty() && stack.peek().charAt(0)>='0' && stack.peek().charAt(0)<='9'){
+                    num.insert(0,stack.pop());
+                }
+                stack.push(createString(sb2.toString(), Integer.parseInt(num.toString())).toString());
+                    
+            }else{
+                stack.push(String.valueOf(arr[i]));
+            }
+           
+        }
+        
+        while(!stack.isEmpty()){
+            sb.insert(0,stack.pop());
+        }
+        
+        return sb.toString();
+    }
+    
+    StringBuilder createString(String s, int k){
+        StringBuilder sb1 = new StringBuilder();
+        String rev = new StringBuilder(s).toString();
+        while(k-->0){
+            sb1.append(rev);
+        }
+        return sb1;
+    }
+}
