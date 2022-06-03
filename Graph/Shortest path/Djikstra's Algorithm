@@ -1,0 +1,7 @@
+Graph is weighted
+source is given
+find shortest path in terms of weighted
+TIP: whenever need to find shortest path using edges, use BFS as it increases radially
+
+1.
+2. using and array
