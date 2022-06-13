@@ -1,0 +1,47 @@
+class Solution {
+    public int findSubstringInWraproundString(String p) {
+        
+        int start=0;
+        int end=1;
+        int count =1;
+        int prev =p.charAt(0)-'a';
+        int curr=0;
+        HashSet<String> set = new HashSet<>();
+        
+        int sum=0;
+            if(p.length()==1) return 1;
+        for(end=1;end<p.length();end++){
+            curr = p.charAt(end)-'a';
+            if(curr==(prev+1)%26){
+                count++;
+                prev=curr;
+            }else{
+                String sub = p.substring(start, end);
+                if(!set.contains(sub)){
+                    sum+=(count*(count+1)/2); 
+                }
+                
+                set.add(sub);
+                
+                count=1;
+                prev= curr;
+                
+                
+                
+                start=end;
+            }
+            
+        }
+        
+            String sub1 = p.substring(start, end);
+                    if(!set.contains(sub1)){
+                        sum+=(count*(count+1)/2); 
+                    }
+       // System.out.println(count);
+        if(p.length()==count){
+           return  (count*(count+1)/2);
+        }
+        
+        return sum;
+    }
+}
