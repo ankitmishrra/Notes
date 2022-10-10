@@ -1,0 +1,28 @@
+ //  Kunal Kushwaha
+  //  Ceiling is the smallest number in the array greater or = target
+  //https://www.youtube.com/watch?v=W9QJ8HaRvJQ
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+       // if(target<nums[0]) return 0;
+        int i=0, j=nums.length-1;
+        int mid=0;int res=0;
+        while(i <= j){
+            mid = (i+j)/2;
+            
+            if(nums[mid]==target){
+                return mid;
+            }else if(nums[mid]>target){
+                j=mid-1;
+               
+            }else{
+                i=mid+1;
+             
+            }
+            
+        }
+        //return right because since the target is not met the while loop breaks 
+        //as the condintion is violated. i becomes j+1. therefore the number just 
+        //greater than target is actually i
+        return i;
+    }
+}
